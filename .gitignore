@@ -12,3 +12,7 @@ wheels/
 .venv
 
 .DS_Store
+.amazonq
+.claude
+.codex/skills
+.crush
