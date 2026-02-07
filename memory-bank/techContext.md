@@ -1,4 +1,4 @@
-# Technical Context: y-cli
+# Technical Context: dq-cli
 
 ## Technology Stack
 
@@ -34,7 +34,7 @@ Based on pyproject.toml and project structure:
 
 ### Project Structure
 ```
-y-cli/
+dq-cli/
 ├── src/
 │   ├── bot/           # Bot management
 │   ├── chat/          # Chat functionality

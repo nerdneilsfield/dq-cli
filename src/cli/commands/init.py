@@ -24,7 +24,7 @@ def print_config_info():
     click.echo(f"{click.style('MCP server config data will be stored in:', fg='green')}\n{click.style(config['mcp_config_file'], fg='cyan')}")
     click.echo(f"{click.style('Prompt config data will be stored in:', fg='green')}\n{click.style(config['prompt_config_file'], fg='cyan')}")
     
-    click.echo(f"\n{click.style('Optional settings that can be configured using `y-cli bot add`:', fg='green')}")
+    click.echo(f"\n{click.style('Optional settings that can be configured using `dq-cli bot add`:', fg='green')}")
     click.echo(f"- {click.style('model:', fg='yellow')} The model to use for chat")
     click.echo(f"- {click.style('base_url:', fg='yellow')} OpenRouter API base URL")
     click.echo(f"- {click.style('print_speed:', fg='yellow')} Speed of text printing")
@@ -35,7 +35,7 @@ def print_config_info():
     click.echo(f"- {click.style('custom_api_path:', fg='yellow')} Custom path for chat completion API request")
     click.echo(f"- {click.style('reasoning_effort:', fg='yellow')} Level of reasoning effort in responses")
     
-    click.echo(f"\n{click.style('MCP servers can be configured using `y-cli mcp add` with these settings:', fg='green')}")
+    click.echo(f"\n{click.style('MCP servers can be configured using `dq-cli mcp add` with these settings:', fg='green')}")
     click.echo(f"- {click.style('name:', fg='yellow')} Name of the MCP server")
     click.echo(f"- {click.style('command:', fg='yellow')} Command to execute the server (e.g., 'node', 'python')")
     click.echo(f"- {click.style('args:', fg='yellow')} Command line arguments for the server")
@@ -46,7 +46,7 @@ def print_config_info():
 
 @click.command()
 def init():
-    """Initialize y-cli configuration with required settings.
+    """Initialize dq-cli configuration with required settings.
 
     Creates a config file then prompts for required settings.
     """

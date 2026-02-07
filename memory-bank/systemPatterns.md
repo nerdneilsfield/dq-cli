@@ -1,4 +1,4 @@
-# System Patterns: y-cli
+# System Patterns: dq-cli
 
 ## Architecture Overview
 

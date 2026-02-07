@@ -1,14 +1,14 @@
-# Cloudflare D1 for y-cli
+# Cloudflare D1 for dq-cli
 
-This document provides information on using Cloudflare D1 as a storage solution for y-cli chat data.
+This document provides information on using Cloudflare D1 as a storage solution for dq-cli chat data.
 
 ## Overview
 
-Cloudflare D1 is a SQLite-compatible database service on Cloudflare's edge network, providing global distribution and low-latency access for y-cli chat data.
+Cloudflare D1 is a SQLite-compatible database service on Cloudflare's edge network, providing global distribution and low-latency access for dq-cli chat data.
 
 ## Configuration
 
-Add the following to your y-cli config file:
+Add the following to your dq-cli config file:
 
 ```yaml
 storage_type: cloudflare_d1
@@ -79,12 +79,12 @@ To migrate from other storage types:
 
 ```bash
 # Export chats from current storage
-y-cli chat export --output chats.json
+dq-cli chat export --output chats.json
 
 # Change your configuration to use Cloudflare D1
 
 # Import chats to the new storage
-y-cli chat import --input chats.json
+dq-cli chat import --input chats.json
 ```
 
 ## Troubleshooting

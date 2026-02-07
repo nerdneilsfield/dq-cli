@@ -1,8 +1,8 @@
-# y-cli 🚀
+# dq-cli 🚀
 
 A tiny command-line interface chat application that brings AI conversations to your terminal.
 
-Check out [y-gui](https://github.com/luohy15/y-gui) for a web-based version of y-cli.
+Check out [y-gui](https://github.com/luohy15/y-gui) for a web-based version of dq-cli.
 
 ## ✨ Features
 
@@ -33,7 +33,7 @@ Check out [y-gui](https://github.com/luohy15/y-gui) for a web-based version of y
 
 ### Multiple bot configurations
 ```
-➜  ~ y-cli bot list
+➜  ~ dq-cli bot list
 Name         API Key      API Type    Base URL                             Model                                Print Speed    Description    OpenRouter Config    MCP Servers    Reasoning Effort
 -----------  -----------  ----------  -----------------------------------  -----------------------------------  -------------  -------------  -------------------  -------------  ------------------
 default      sk-or-v1...  N/A         https://gateway.ai.cloudflare.co...  google/gemini-2.0-flash-001          None            N/A            Yes                  No             N/A
@@ -45,7 +45,7 @@ dify-bot     app-2drF...  dify        https://api.dify.ai/v1                    
 
 ### Multiple MCP servers
 ```
-➜  ~ y-cli mcp list
+➜  ~ dq-cli mcp list
 Name            Type    Command/URL          Arguments/Token    Environment     Auto-Confirm
 --------------  ------  -------------------  -----------------  --------------  --------------
 brave-search    sse     https://router.m...                                     brave_web_s...
@@ -73,28 +73,28 @@ Setup Instructions:
 
 ### Run without Installation
 ```bash
-uvx y-cli
+uvx dq-cli
 ```
 
 ### Install with uv tool
 ```bash
-uv tool install y-cli
+uv tool install dq-cli
 ```
 
 ### Initialize
 ```bash
-y-cli init
+dq-cli init
 ```
 
 ### Start Chat
 ```bash
-y-cli chat
+dq-cli chat
 ```
 
 ## 🛠️ Usage
 
 ```bash
-y-cli [OPTIONS] COMMAND [ARGS]...
+dq-cli [OPTIONS] COMMAND [ARGS]...
 ```
 
 ### Commands
@@ -126,4 +126,4 @@ y-cli [OPTIONS] COMMAND [ARGS]...
 
 ## 📚 Documentation
 
-Visit the [deepwiki page](https://deepwiki.com/luohy15/y-cli) for comprehensive project documentation and guides.
+Visit the [deepwiki page](https://deepwiki.com/luohy15/dq-cli) for comprehensive project documentation and guides.

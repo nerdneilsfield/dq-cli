@@ -1,4 +1,4 @@
-# Product Context: y-cli
+# Product Context: dq-cli
 
 ## Problem Statement
 Developers and AI practitioners need a unified command-line interface to:

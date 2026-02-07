@@ -6,7 +6,7 @@ Original source: https://github.com/cline/cline/blob/v3.3.0/src/core/prompts/sys
 License: https://github.com/cline/cline/blob/v3.3.0/LICENSE
 
 Notice: This prompt is a simplified adaptation of the Cline prompt system.
-It has been modified for use in the y-cli project. The original MCP implementation
+It has been modified for use in the dq-cli project. The original MCP implementation
 may contain additional features and capabilities not represented here.
 
 Copyright 2025 Cline Bot Inc.

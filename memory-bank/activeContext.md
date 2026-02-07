@@ -1,4 +1,4 @@
-# Active Context: y-cli
+# Active Context: dq-cli
 
 ## Current Focus
 Implementing Cloudflare storage integration for chat data, enabling cloud-based persistence and synchronization.

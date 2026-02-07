@@ -12,53 +12,53 @@ The MCP (Model Context Protocol) Daemon is a standalone background process that 
 
 ## Usage
 
-The MCP daemon can be managed using the `y-cli mcp daemon` command with various subcommands:
+The MCP daemon can be managed using the `dq-cli mcp daemon` command with various subcommands:
 
 ### Starting the Daemon
 
 ```bash
 # Start the daemon in the background
-y-cli mcp daemon start
+dq-cli mcp daemon start
 
 # Start the daemon in the foreground (useful for debugging)
-y-cli mcp daemon start --foreground
+dq-cli mcp daemon start --foreground
 
 # Start with custom socket and log paths
-y-cli mcp daemon start --socket /path/to/socket --log /path/to/logfile.log
+dq-cli mcp daemon start --socket /path/to/socket --log /path/to/logfile.log
 ```
 
 ### Checking Daemon Status
 
 ```bash
 # Check if the daemon is running and list connected servers
-y-cli mcp daemon status
+dq-cli mcp daemon status
 ```
 
 ### Viewing Daemon Logs
 
 ```bash
 # Show the last 20 lines of the daemon log
-y-cli mcp daemon log
+dq-cli mcp daemon log
 
 # Show the last N lines of the daemon log
-y-cli mcp daemon log --lines 50
+dq-cli mcp daemon log --lines 50
 ```
 
 ### Stopping the Daemon
 
 ```bash
 # Stop the daemon
-y-cli mcp daemon stop
+dq-cli mcp daemon stop
 ```
 
 ### Restarting the Daemon
 
 ```bash
 # Restart the daemon
-y-cli mcp daemon restart
+dq-cli mcp daemon restart
 
 # Restart the daemon in foreground mode
-y-cli mcp daemon restart --foreground
+dq-cli mcp daemon restart --foreground
 ```
 
 ## How It Works
@@ -110,9 +110,9 @@ python build/test_concurrent_daemon.py 20 8
 
 ## File Locations
 
-- **Socket**: `~/Library/Application Support/y-cli/mcp_daemon.sock` (macOS) or `~/.local/share/y-cli/mcp_daemon.sock` (Linux)
-- **PID File**: `~/Library/Application Support/y-cli/mcp_daemon.pid` (macOS) or `~/.local/share/y-cli/mcp_daemon.pid` (Linux)
-- **Log File**: `~/Library/Logs/y-cli/mcp_daemon.log` (macOS) or `~/.local/share/y-cli/logs/mcp_daemon.log` (Linux)
+- **Socket**: `~/Library/Application Support/dq-cli/mcp_daemon.sock` (macOS) or `~/.local/share/dq-cli/mcp_daemon.sock` (Linux)
+- **PID File**: `~/Library/Application Support/dq-cli/mcp_daemon.pid` (macOS) or `~/.local/share/dq-cli/mcp_daemon.pid` (Linux)
+- **Log File**: `~/Library/Logs/dq-cli/mcp_daemon.log` (macOS) or `~/.local/share/dq-cli/logs/mcp_daemon.log` (Linux)
 
 ## Troubleshooting
 
@@ -124,15 +124,15 @@ python build/test_concurrent_daemon.py 20 8
 
 ### Connection Issues
 
-- Check if the daemon is running with `y-cli mcp daemon status`
+- Check if the daemon is running with `dq-cli mcp daemon status`
 - Verify the socket file exists
-- Restart the daemon with `y-cli mcp daemon restart`
+- Restart the daemon with `dq-cli mcp daemon restart`
 
 ### MCP Servers Not Connecting
 
 - Check the daemon log for connection errors
 - Verify the MCP server configurations are correct
-- Try restarting the daemon with `y-cli mcp daemon restart`
+- Try restarting the daemon with `dq-cli mcp daemon restart`
 
 ### Concurrent Request Errors
 

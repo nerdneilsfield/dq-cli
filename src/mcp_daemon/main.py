@@ -22,7 +22,7 @@ def main():
     # Determine socket path
     socket_path = args.socket
     if not socket_path:
-        app_name = "y-cli"
+        app_name = "dq-cli"
         if sys.platform == "darwin":  # macOS
             base_dir = os.path.expanduser(f"~/Library/Application Support/{app_name}")
         else:  # Linux and others
@@ -36,7 +36,7 @@ def main():
     # Determine log file path
     log_file = args.log
     if not log_file:
-        app_name = "y-cli"
+        app_name = "dq-cli"
         if sys.platform == "darwin":  # macOS
             log_dir = os.path.expanduser(f"~/Library/Logs/{app_name}")
         else:  # Linux and others

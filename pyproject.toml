@@ -1,5 +1,5 @@
 [project]
-name = "y-cli"
+name = "dq-cli"
 version = "0.4.0"
 description = "Command-line real-time conversation app"
 readme = "README.md"
@@ -19,4 +19,7 @@ dependencies = [
 ]
 
 [project.scripts]
-y-cli = "cli:cli"
+dq-cli = "cli:cli"
+
+[tool.uv]
+package = true

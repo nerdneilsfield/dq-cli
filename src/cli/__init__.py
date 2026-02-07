@@ -21,7 +21,7 @@ def cli():
         default_config = bot_service.get_config()
         if not default_config.api_key or not default_config.model:
             click.echo("Error: API key or model is not set in default bot config")
-            click.echo("Please set it using 'y-cli init'")
+            click.echo("Please set it using 'dq-cli init'")
             raise click.Abort()
 
 # Register commands

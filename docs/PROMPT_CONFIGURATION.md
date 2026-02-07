@@ -2,7 +2,7 @@
 
 This document explains how to configure and use prompts in Y-CLI.
 
-> **Note:** This document refers to command line usage patterns. All commands use `y-cli` as the base command.
+> **Note:** This document refers to command line usage patterns. All commands use `dq-cli` as the base command.
 
 ## Overview
 
@@ -20,7 +20,7 @@ Y-CLI provides a prompt management system that allows you to create, list, and d
 ### List Available Prompts
 
 ```bash
-y-cli prompt list
+dq-cli prompt list
 ```
 
 Options:
@@ -29,7 +29,7 @@ Options:
 ### Add a New Prompt
 
 ```bash
-y-cli prompt add
+dq-cli prompt add
 ```
 
 Interactive prompts will ask for:
@@ -40,7 +40,7 @@ Interactive prompts will ask for:
 ### Delete a Prompt
 
 ```bash
-y-cli prompt delete <name>
+dq-cli prompt delete <name>
 ```
 
 Where `<name>` is the name of the prompt you want to delete.
@@ -50,7 +50,7 @@ Where `<name>` is the name of the prompt you want to delete.
 When configuring bots, you can associate one or more prompts with a bot:
 
 ```bash
-y-cli bot add
+dq-cli bot add
 ```
 
 During bot configuration, you'll be asked to select prompts to use with this bot. You can select multiple prompts which will be combined in the order specified.
@@ -77,8 +77,8 @@ Y-CLI comes with a pre-configured MCP prompt that provides instructions for usin
 
 Prompt configurations are stored in a JSONL file at:
 
-- On macOS: `~/Library/Preferences/y-cli/prompt_config.jsonl`
-- On Linux: `~/.config/y-cli/prompt_config.jsonl`
+- On macOS: `~/Library/Preferences/dq-cli/prompt_config.jsonl`
+- On Linux: `~/.config/dq-cli/prompt_config.jsonl`
 
 You can edit this file directly with a text editor if you prefer manual configuration over using the CLI commands.
 
@@ -87,7 +87,7 @@ You can edit this file directly with a text editor if you prefer manual configur
 Here's an example of creating a technical writing prompt:
 
 ```bash
-y-cli prompt add
+dq-cli prompt add
 ```
 
 Then enter:
@@ -105,7 +105,7 @@ Then enter:
 
 ## Troubleshooting
 
-- If a prompt isn't being applied, verify it exists with `y-cli prompt list`
+- If a prompt isn't being applied, verify it exists with `dq-cli prompt list`
 - Check that the prompt name is correctly specified in your bot configuration
 - The "default" and "mcp" prompts cannot be deleted
 

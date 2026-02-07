@@ -7,7 +7,7 @@ from prompt import PromptService, PromptRepository
 
 def get_default_config():
     """Get default configuration"""
-    app_name = "y-cli"
+    app_name = "dq-cli"
     if sys.platform == "darwin":  # macOS
         base_dir = os.path.expanduser(f"~/Library/Application Support/{app_name}")
         cache_dir = os.path.expanduser(f"~/Library/Caches/{app_name}")
@@ -45,7 +45,7 @@ def get_default_config():
 
 def load_config():
     """Load configuration from TOML file or create with defaults if it doesn't exist"""
-    app_name = "y-cli"
+    app_name = "dq-cli"
     # toml config file - use Preferences dir on macOS
     if sys.platform == "darwin":
         CONFIG_FILE = os.path.expanduser(f"~/Library/Preferences/{app_name}/config.toml")

@@ -51,7 +51,7 @@ class MCPDaemonClient:
         Returns:
             str: Path to the daemon socket file
         """
-        app_name = "y-cli"
+        app_name = "dq-cli"
         if sys.platform == "darwin":  # macOS
             base_dir = os.path.expanduser(f"~/Library/Application Support/{app_name}")
         else:  # Linux and others

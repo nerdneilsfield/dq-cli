@@ -13,7 +13,7 @@ console = Console()
 
 def get_default_socket_path() -> str:
     """Get the default socket path based on platform"""
-    app_name = "y-cli"
+    app_name = "dq-cli"
     if sys.platform == "darwin":  # macOS
         base_dir = os.path.expanduser(f"~/Library/Application Support/{app_name}")
     else:  # Linux and others
@@ -23,7 +23,7 @@ def get_default_socket_path() -> str:
 
 def get_daemon_pid_file() -> str:
     """Get the daemon PID file path based on platform"""
-    app_name = "y-cli"
+    app_name = "dq-cli"
     if sys.platform == "darwin":  # macOS
         base_dir = os.path.expanduser(f"~/Library/Application Support/{app_name}")
     else:  # Linux and others
@@ -33,7 +33,7 @@ def get_daemon_pid_file() -> str:
 
 def get_daemon_log_file() -> str:
     """Get the daemon log file path based on platform"""
-    app_name = "y-cli"
+    app_name = "dq-cli"
     if sys.platform == "darwin":  # macOS
         log_dir = os.path.expanduser(f"~/Library/Logs/{app_name}")
     else:  # Linux and others

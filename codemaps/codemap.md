@@ -1,6 +1,6 @@
-# y-cli 代码地图 (Codemap)
+# dq-cli 代码地图 (Codemap)
 
-> 项目概述：y-cli 是一个命令行 AI 聊天应用，支持多 Bot 配置、MCP (Model Context Protocol) 工具集成、流式响应显示，并提供本地文件和 Cloudflare D1 两种存储方式。
+> 项目概述：dq-cli 是一个命令行 AI 聊天应用，支持多 Bot 配置、MCP (Model Context Protocol) 工具集成、流式响应显示，并提供本地文件和 Cloudflare D1 两种存储方式。
 
 ---
 
@@ -150,8 +150,8 @@
 │   ┌─────────────────────────────────────────────────────────────────────────────────┐   │
 │   │                          config.py                                               │   │
 │   │                                                                                  │   │
-│   │  • 加载 ~/Library/Preferences/y-cli/config.toml (macOS)                         │   │
-│   │  • 加载 ~/.config/y-cli/config.toml (Linux)                                     │   │
+│   │  • 加载 ~/Library/Preferences/dq-cli/config.toml (macOS)                         │   │
+│   │  • 加载 ~/.config/dq-cli/config.toml (Linux)                                     │   │
 │   │  • 代理设置 (http_proxy/https_proxy)                                            │   │
 │   │  • 存储类型配置 (file/cloudflare_d1)                                            │   │
 │   └─────────────────────────────────────────────────────────────────────────────────┘   │
@@ -481,8 +481,8 @@ await self.process_user_message(user_message)  # 递归调用
 ```python
 # src/mcp_daemon/main.py::main()
 # 1. 确定 socket 路径和日志路径
-socket_path = ~/Library/Application Support/y-cli/mcp_daemon.sock
-log_file = ~/Library/Logs/y-cli/mcp_daemon.log
+socket_path = ~/Library/Application Support/dq-cli/mcp_daemon.sock
+log_file = ~/Library/Logs/dq-cli/mcp_daemon.log
 
 # 2. 创建并启动服务器
 daemon = MCPDaemonServer(socket_path, log_file)
@@ -562,4 +562,4 @@ src/
 ---
 
 *生成时间: 2026-02-07*
-*版本: y-cli v0.4.0*
+*版本: dq-cli v0.4.0*

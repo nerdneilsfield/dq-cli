@@ -1,7 +1,7 @@
-# Project Brief: y-cli
+# Project Brief: dq-cli
 
 ## Overview
-y-cli is a command-line interface tool focused on chat interactions, bot management, and Model Context Protocol (MCP) server integration. The project aims to provide a robust CLI framework for managing AI-powered conversations and bot interactions.
+dq-cli is a command-line interface tool focused on chat interactions, bot management, and Model Context Protocol (MCP) server integration. The project aims to provide a robust CLI framework for managing AI-powered conversations and bot interactions.
 
 ## Core Requirements
 
