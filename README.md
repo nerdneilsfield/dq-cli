@@ -91,6 +91,29 @@ dq-cli init
 dq-cli chat
 ```
 
+### Configure Custom Providers (Optional)
+
+Add OpenAI-compatible providers to your `config.toml`:
+
+```toml
+[[providers]]
+name = "openai"
+base_url = "https://api.openai.com/v1"
+api_key = "sk-..."
+models = ["gpt-4", "gpt-4-turbo", "gpt-3.5-turbo"]
+
+[[providers]]
+name = "deepseek"
+base_url = "https://api.deepseek.com"
+api_key = "sk-..."
+models = ["deepseek-chat", "deepseek-coder"]
+```
+
+Switch models during chat:
+- `/model` - List all available models
+- `/model gpt-4` - Switch to a different model
+- `/model deepseek/deepseek-chat` - Switch provider and model
+
 ## 🛠️ Usage
 
 ```bash

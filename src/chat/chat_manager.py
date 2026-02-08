@@ -14,7 +14,7 @@ from .utils.tool_utils import contains_tool_use, split_content
 from .utils.message_utils import create_message
 from .provider.base_provider import BaseProvider
 from bot import BotConfig
-from config import prompt_service, mcp_service
+from config import prompt_service, mcp_service, provider_service
 from config import config
 from loguru import logger
 
@@ -175,6 +175,106 @@ class ChatManager:
             # Update existing chat - external_id will be preserved automatically
             self.current_chat = await self.service.update_chat(self.current_chat.id, self.messages, self.external_id)
 
+    def _handle_model_command(self, command: str):
+        """Handle /model command for switching models
+
+        Args:
+            command: The /model command string (e.g., "/model", "/model gpt-4", "/model openai/gpt-4")
+        """
+        parts = command.strip().split(maxsplit=1)
+
+        # /model without arguments - list all available models
+        if len(parts) == 1:
+            self._list_available_models()
+            return
+
+        # /model <model-name> or /model <provider>/<model>
+        model_spec = parts[1]
+
+        # Check if format is <provider>/<model>
+        if '/' in model_spec:
+            provider_name, model_name = model_spec.split('/', 1)
+            self._switch_provider_and_model(provider_name, model_name)
+        else:
+            # Just model name - use current provider
+            self._switch_model(model_spec)
+
+    def _list_available_models(self):
+        """List all available models from all providers"""
+        from rich.table import Table
+
+        # Get all provider/model pairs
+        all_models = provider_service.list_all_models()
+
+        if not all_models:
+            self.display_manager.console.print("[yellow]No providers configured with models.[/yellow]")
+            self.display_manager.console.print("[dim]Add providers to your config.toml file to use /model switching.[/dim]")
+            return
+
+        # Create table
+        table = Table(title="Available Models", show_header=True, header_style="bold cyan")
+        table.add_column("Provider", style="green")
+        table.add_column("Model", style="yellow")
+        table.add_column("Current", style="magenta")
+
+        current_model = self.bot_config.model
+
+        # Group by provider
+        from itertools import groupby
+        for provider_name, models_iter in groupby(all_models, key=lambda x: x[0]):
+            models = list(models_iter)
+            for idx, (_, model_name) in enumerate(models):
+                is_current = "✓" if model_name == current_model else ""
+                if idx == 0:
+                    table.add_row(provider_name, model_name, is_current)
+                else:
+                    table.add_row("", model_name, is_current)
+
+        self.display_manager.console.print(table)
+        self.display_manager.console.print(f"\n[dim]Current: {current_model}[/dim]")
+        self.display_manager.console.print("[dim]Usage: /model <provider>/<model> or /model <model>[/dim]")
+
+    def _switch_model(self, model_name: str):
+        """Switch to a different model using current provider
+
+        Args:
+            model_name: Name of the model to switch to
+        """
+        # Update bot config model
+        self.bot_config.model = model_name
+        self.model = model_name
+
+        self.display_manager.console.print(f"[green]✓[/green] Switched to model: [yellow]{model_name}[/yellow]")
+
+    def _switch_provider_and_model(self, provider_name: str, model_name: str):
+        """Switch to a different provider and model
+
+        Args:
+            provider_name: Name of the provider
+            model_name: Name of the model
+        """
+        # Look up provider
+        provider = provider_service.get_provider(provider_name)
+
+        if not provider:
+            self.display_manager.console.print(f"[red]✗[/red] Provider '{provider_name}' not found")
+            self.display_manager.console.print("[dim]Use /model to see available providers[/dim]")
+            return
+
+        # Check if model is in provider's model list (warn if not, but allow)
+        if provider.models and model_name not in provider.models:
+            self.display_manager.console.print(f"[yellow]⚠[/yellow] Warning: Model '{model_name}' not in provider's model list")
+            self.display_manager.console.print(f"[dim]Available models: {', '.join(provider.models)}[/dim]")
+            self.display_manager.console.print("[dim]Proceeding anyway - provider may still support this model[/dim]\n")
+
+        # Update bot config with provider settings
+        self.bot_config.base_url = provider.base_url
+        self.bot_config.api_key = provider.api_key
+        self.bot_config.model = model_name
+        self.model = model_name
+
+        self.display_manager.console.print(f"[green]✓[/green] Switched to provider: [cyan]{provider_name}[/cyan], model: [yellow]{model_name}[/yellow]")
+
     async def run(self):
         """Run the chat session"""
         async with AsyncExitStack() as exit_stack:
@@ -233,6 +333,11 @@ class ChatManager:
                     if user_input.lower().startswith('copy '):
                         if self.input_manager.handle_copy_command(user_input, self.messages):
                             continue
+
+                    # Handle /model command
+                    if user_input.strip().startswith('/model'):
+                        self._handle_model_command(user_input.strip())
+                        continue
 
                     # Add user message to history
                     user_message = create_message("user", user_input)

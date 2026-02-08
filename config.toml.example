@@ -1,0 +1,54 @@
+# dq-cli Configuration Example
+# Copy this file to the appropriate location and customize:
+#   macOS: ~/Library/Preferences/dq-cli/config.toml
+#   Linux: ~/.config/dq-cli/config.toml
+
+# Storage configuration
+storage_type = "file"  # Options: "file" or "cloudflare_d1"
+
+# Provider configurations (optional)
+# Define multiple OpenAI-compatible providers for easy model switching
+
+[[providers]]
+name = "openai"
+base_url = "https://api.openai.com/v1"
+api_key = "sk-proj-..."  # Replace with your OpenAI API key
+models = ["gpt-4", "gpt-4-turbo", "gpt-3.5-turbo", "gpt-4o"]
+
+[[providers]]
+name = "anthropic"
+base_url = "https://api.anthropic.com/v1"
+api_key = "sk-ant-..."  # Replace with your Anthropic API key
+models = ["claude-3-5-sonnet-20241022", "claude-3-opus-20240229"]
+
+[[providers]]
+name = "deepseek"
+base_url = "https://api.deepseek.com"
+api_key = "sk-..."  # Replace with your DeepSeek API key
+models = ["deepseek-chat", "deepseek-coder"]
+
+[[providers]]
+name = "openrouter"
+base_url = "https://openrouter.ai/api/v1"
+api_key = "sk-or-v1-..."  # Replace with your OpenRouter API key
+models = [
+  "anthropic/claude-3.7-sonnet",
+  "google/gemini-2.0-flash-001",
+  "deepseek/deepseek-chat-v3-0324:free",
+  "openai/o3-mini"
+]
+
+# Cloudflare D1 configuration (only if storage_type = "cloudflare_d1")
+[cloudflare_d1]
+account_id = ""
+database_id = ""
+api_token = ""
+user_prefix = "default"
+
+# Optional: Proxy settings
+# proxy_host = "127.0.0.1"
+# proxy_port = "7890"
+
+# Optional: S3/CloudFront for chat sharing
+# s3_bucket = ""
+# cloudfront_distribution_id = ""

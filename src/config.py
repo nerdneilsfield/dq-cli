@@ -4,6 +4,7 @@ import toml
 from bot import BotService, BotRepository
 from mcp_server import McpServerConfigService, McpServerConfigRepository
 from prompt import PromptService, PromptRepository
+from provider import ProviderService, ProviderRepository
 
 def get_default_config():
     """Get default configuration"""
@@ -89,3 +90,4 @@ CONFIG_FILE, config = load_config()
 bot_service = BotService(BotRepository(config['bot_config_file']))
 mcp_service = McpServerConfigService(McpServerConfigRepository(config['mcp_config_file']))
 prompt_service = PromptService(PromptRepository(config['prompt_config_file']))
+provider_service = ProviderService(ProviderRepository(CONFIG_FILE))

@@ -55,7 +55,13 @@ dq-cli is a command-line AI chat application supporting multiple bot configurati
    - Platform-specific config paths (macOS/Linux)
    - Proxy settings support
 
-7. **UI Components** (`src/cli/`)
+7. **Provider System** (`src/provider/`)
+   - `Provider`: Pydantic model for provider configuration
+   - `ProviderRepository`: Load providers from TOML config
+   - `ProviderService`: Provider selection and model management
+   - Supports multiple OpenAI-compatible providers with dynamic model switching
+
+8. **UI Components** (`src/cli/`)
    - `DisplayManager`: Streaming output, Markdown rendering, code highlighting
    - `InputManager`: Multi-line input, history, copy command
 
@@ -71,6 +77,7 @@ dq-cli is a command-line AI chat application supporting multiple bot configurati
 - Service-Repository pattern for data access
 - Provider pattern for API abstraction
 - Manager pattern for complex subsystems
+- Centralized provider registry with TOML configuration
 
 ### Configuration
 - **macOS**:
@@ -83,11 +90,12 @@ dq-cli is a command-line AI chat application supporting multiple bot configurati
 
 ### Message Flow
 1. User input → InputManager
-2. Create user message → ChatManager.process_user_message()
-3. Call provider API → streaming response
-4. Display via DisplayManager
-5. Check for tool use → MCP execution if needed (recursive)
-6. Persist to repository
+2. Handle special commands (`/model`, `copy`, `exit`)
+3. Create user message → ChatManager.process_user_message()
+4. Call provider API → streaming response
+5. Display via DisplayManager
+6. Check for tool use → MCP execution if needed (recursive)
+7. Persist to repository (including model metadata)
 
 ### MCP Integration
 - Tool confirmation required (unless auto_confirm configured)
@@ -102,6 +110,8 @@ dq-cli is a command-line AI chat application supporting multiple bot configurati
 - **Bot Config**: API configuration (base_url, api_key, model, mcp_servers, etc.)
 - **MCP Server**: External tool provider (stdio or SSE connection type)
 - **Chat Session**: Conversation with messages, persisted with unique 6-char ID
+- **Provider**: OpenAI-compatible API provider with base_url, api_key, and models list
+- **Model Switching**: Runtime ability to change models via `/model` command
 - **Tool Use**: MCP tool invocation within assistant response, requires execution and result feeding back
 - **Streaming Response**: SSE-based real-time token streaming from providers
 - **Reasoning Content**: Special handling for models like DeepSeek-R1 that emit reasoning traces
