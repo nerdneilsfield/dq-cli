@@ -1,5 +1,13 @@
 from typing import Dict, Optional, Any
+from enum import Enum
 from mcp import ClientSession
+
+class SessionState(Enum):
+    """Session connection state"""
+    INITIALIZING = "initializing"
+    ACTIVE = "active"
+    EXPIRED = "expired"
+    DISCONNECTED = "disconnected"
 
 class MCPResponse:
     """Standard response format for MCP operations"""
@@ -18,12 +26,20 @@ class MCPResponse:
 
 class ServerSession:
     """Wrapper for MCP server sessions"""
-    def __init__(self, session: ClientSession, server_type: str):
+    def __init__(self,
+                 session: ClientSession,
+                 transport_type: str,
+                 session_id: Optional[str] = None,
+                 endpoint_url: Optional[str] = None):
         self.session = session
-        self.server_type = server_type  # 'sse' or 'stdio'
-        
+        self.transport_type = transport_type  # 'stdio', 'sse', 'legacy-sse', 'streamable-http'
+        self.session_id = session_id  # For Streamable HTTP session management
+        self.last_event_id: Optional[str] = None  # For SSE resumability
+        self.endpoint_url = endpoint_url  # Server endpoint URL
+        self.state = SessionState.INITIALIZING
+
     async def close(self):
         """Close the session"""
         # Note: The actual closing of session happens in AsyncExitStack.aclose()
         # This method exists for consistency and potential future expansion
-        pass
+        self.state = SessionState.DISCONNECTED

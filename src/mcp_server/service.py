@@ -64,31 +64,40 @@ class McpServerConfigService:
         env: Optional[dict[str, str]] = None,
         url: Optional[str] = None,
         token: Optional[str] = None,
-        auto_confirm: Optional[List[str]] = None
+        auto_confirm: Optional[List[str]] = None,
+        transport_type: Optional[str] = None,
+        custom_headers: Optional[dict[str, str]] = None,
+        timeout: Optional[float] = None
     ) -> bool:
         """
         Create a new MCP setting
-        
+
         Args:
             name (str): Name of the MCP server
             command (str, optional): Command to execute the server (for stdio)
             args (List[str], optional): Command line arguments (for stdio)
             env (dict[str, str], optional): Environment variables (for stdio)
-            url (str, optional): The URL endpoint for server connection (for SSE)
-            token (str, optional): The authentication token (for SSE)
+            url (str, optional): The URL endpoint for server connection (for HTTP)
+            token (str, optional): The authentication token (for HTTP)
             auto_confirm (List[str], optional): List of tool names that should be auto-confirmed
-            
+            transport_type (str, optional): Transport type - 'auto', 'streamable-http', 'legacy-sse', 'stdio'
+            custom_headers (dict[str, str], optional): Custom HTTP headers for Streamable HTTP
+            timeout (float, optional): Connection timeout in seconds for HTTP connections
+
         Returns:
             bool: True if creation was successful, False otherwise
         """
         setting = McpServerConfig(
-            name=name, 
-            command=command, 
-            args=args or [], 
-            env=env or {}, 
-            url=url, 
+            name=name,
+            command=command,
+            args=args or [],
+            env=env or {},
+            url=url,
             token=token,
-            auto_confirm=auto_confirm or []
+            auto_confirm=auto_confirm or [],
+            transport_type=transport_type,
+            custom_headers=custom_headers or {},
+            timeout=timeout
         )
         return self.repository.add_or_update(setting)
         

@@ -5,17 +5,20 @@ from typing import Dict, List, Optional
 class McpServerConfig:
     """
     Configuration class for MCP (Model Context Protocol) server settings.
-    
+
     Attributes:
         name (str): The name of the MCP server
         command (str): The command to execute the server (e.g., 'node', 'python') - used for stdio
         args (list[str]): Command line arguments for the server - used for stdio
         env (dict[str, str]): Environment variables for the server process - used for stdio
-        url (str, optional): The URL endpoint for SSE server connection
-        token (str, optional): The authentication token for SSE server connection
+        url (str, optional): The URL endpoint for HTTP server connection (Streamable HTTP or legacy SSE)
+        token (str, optional): The authentication token for HTTP server connection
         auto_confirm (list[str], optional): List of tool names that should be auto-confirmed without user prompt
+        transport_type (str, optional): Transport type override - 'auto', 'streamable-http', 'legacy-sse', 'stdio'
+        custom_headers (dict[str, str], optional): Custom HTTP headers for Streamable HTTP connections
+        timeout (float, optional): Connection timeout in seconds for HTTP connections
     """
-    
+
     name: str
     command: Optional[str] = None
     args: List[str] = field(default_factory=list)
@@ -23,6 +26,9 @@ class McpServerConfig:
     url: Optional[str] = None
     token: Optional[str] = None
     auto_confirm: List[str] = field(default_factory=list)
+    transport_type: Optional[str] = None  # 'auto', 'streamable-http', 'legacy-sse', 'stdio'
+    custom_headers: Dict[str, str] = field(default_factory=dict)
+    timeout: Optional[float] = None
     
     @classmethod
     def from_dict(cls, data: Dict) -> 'McpServerConfig':

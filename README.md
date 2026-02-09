@@ -17,7 +17,12 @@ Check out [y-gui](https://github.com/luohy15/y-gui) for a web-based version of d
   - [Deepseek-r1 reasoning_content](https://api-docs.deepseek.com/guides/reasoning_model) output print
   - [OpenAI o3-mini reasoning_effort](https://platform.openai.com/docs/guides/reasoning) configuration 
 - 🔗 MCP (Model Context Protocol) integration:
-  - Client support with multiple server configurations (stdio/SSE)
+  - Client support with multiple transport types:
+    - **Streamable HTTP** (modern, recommended - MCP 2025-03-26 spec)
+    - stdio (traditional subprocess-based)
+    - Legacy SSE (deprecated, for compatibility)
+  - Automatic transport detection with caching
+  - Session management and resumable connections
   - Persistent daemon
   - Custom prompt configurations
 - 🧐 Simple "Deep Research" mode by prompt configuration
@@ -44,14 +49,35 @@ dify-bot     app-2drF...  dify        https://api.dify.ai/v1                    
 ```
 
 ### Multiple MCP servers
+
+Supports modern **Streamable HTTP** transport alongside traditional stdio and legacy SSE:
+
 ```
 ➜  ~ dq-cli mcp list
-Name            Type    Command/URL          Arguments/Token    Environment     Auto-Confirm
---------------  ------  -------------------  -----------------  --------------  --------------
-brave-search    sse     https://router.m...                                     brave_web_s...
-todo            stdio   uvx                  mcp-todo
-exa-mcp-server  stdio   npx                  exa-mcp-server     EXA_API_KEY...
+Name              Type              Command/URL          Arguments/Token    Environment     Auto-Confirm
+----------------  ----------------  -------------------  -----------------  --------------  --------------
+anthropic-mcp     streamable-http   https://api.anth...   sk-ant-xxxxx                       safe_tools...
+brave-search      legacy-sse        https://router.m...                                      brave_web_s...
+todo              stdio             uvx                  mcp-todo
+exa-mcp-server    stdio             npx                  exa-mcp-server     EXA_API_KEY...
 ```
+
+**Add Streamable HTTP server** (auto-detects transport):
+```bash
+dq-cli mcp add my-server --url https://api.example.com/mcp --token your-token
+```
+
+**With custom headers and timeout**:
+```bash
+dq-cli mcp add my-server \
+  --url https://api.example.com/mcp \
+  --token your-token \
+  --transport streamable-http \
+  --timeout 60 \
+  --header "X-API-Key: key123"
+```
+
+See [MCP Streamable HTTP Guide](docs/MCP_STREAMABLE_HTTP.md) for detailed documentation.
 
 ## ⚡ Quick Start
 
@@ -130,8 +156,9 @@ dq-cli [OPTIONS] COMMAND [ARGS]...
   - `list`    List all configured bots
   - `delete`  Delete a bot configuration
 - `mcp`    Manage MCP server configurations:
-  - `add`     Add a new MCP server configuration
-  - `list`    List all configured MCP servers
+  - `add`     Add a new MCP server (supports stdio, SSE, and Streamable HTTP)
+    - Options: `--url`, `--token`, `--transport`, `--timeout`, `--header`
+  - `list`    List all configured MCP servers with transport types
   - `delete`  Delete an MCP server configuration
 - `daemon`  Manage the MCP daemon:
   - `start`    Start the MCP daemon
@@ -149,4 +176,33 @@ dq-cli [OPTIONS] COMMAND [ARGS]...
 
 ## 📚 Documentation
 
-Visit the [deepwiki page](https://deepwiki.com/luohy15/dq-cli) for comprehensive project documentation and guides.
+### MCP Streamable HTTP Transport
+
+dq-cli supports the modern **MCP Streamable HTTP** transport (MCP spec 2025-03-26):
+
+- ✅ **True bidirectional communication** - Servers can initiate requests
+- ✅ **Session management** - Persistent sessions with automatic reconnection
+- ✅ **Resumable connections** - Recover from network failures
+- ✅ **Better security** - Origin validation, enhanced authentication
+- ✅ **Automatic transport detection** - Tries Streamable HTTP first, falls back to legacy SSE
+
+**Quick Start:**
+```bash
+# Add a Streamable HTTP server (auto-detects transport)
+dq-cli mcp add my-server --url https://api.example.com/mcp --token sk-xxxxx
+
+# Start daemon (establishes connections)
+dq-cli daemon start
+
+# Use in chat
+dq-cli chat -b claude  # If claude bot has MCP servers configured
+```
+
+**Documentation:**
+- [MCP Streamable HTTP Guide](docs/MCP_STREAMABLE_HTTP.md) - Complete user guide
+- [Configuration Examples](docs/MCP_CONFIGURATION_EXAMPLES.md) - Real-world examples
+- [Troubleshooting](docs/TROUBLESHOOTING_MCP.md) - Common issues and solutions
+
+**Additional Resources:**
+- [deepwiki page](https://deepwiki.com/luohy15/dq-cli) - Comprehensive project documentation
+- [MCP Specification](https://modelcontextprotocol.io/) - Official MCP documentation
